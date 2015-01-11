@@ -10,12 +10,17 @@
 
 	<title>Littlee on GitHub</title>
 	<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="./css/solarized_dark.css">
 	<link rel="stylesheet" type="text/css" href="./css/main.css">
 
 	<!--[if lt IE 9]>
 	  <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 	  <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
+	<script src="./js/highlight.pack.js"></script>
+	<script type="text/javascript">
+		hljs.initHighlightingOnLoad();
+	</script>
 </head>
 
 	<body>
@@ -25,6 +30,14 @@
 					<img src="./images/favicon.png" class="center-block">
 					<h1 class="text-center">Welcome to Littlee</h1>
 					<h2 class="text-center">Coming Soon...</h2>
+
+					<pre>
+						<code class="lang-javascript">
+$(document).ready(function () {
+	console.log('code highlight test.');
+});
+						</code>
+					</pre>
 				</div>
 			</div>
 		</div>

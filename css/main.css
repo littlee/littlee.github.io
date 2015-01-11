@@ -7,3 +7,9 @@ body {
 	padding-left: 0;
 	padding-right: 0;
 }
+
+pre {
+	padding: 0;
+	border: none;
+	background-color: transparent;
+}
