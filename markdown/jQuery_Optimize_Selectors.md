@@ -1,5 +1,6 @@
 # 优化选择器
 原文地址： http://learn.jquery.com/performance/optimize-selectors/
+
 选择器优化已不是以前那么重要，鉴于更多的浏览器实现了 `document.querySelectorAll()` ，选择的负担由 jQuery 转移到浏览器上。即使如此，还是要一些技巧要谨记于心。
 
 ## 基于ID的选择器
