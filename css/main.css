@@ -13,3 +13,10 @@ pre {
 	border: none;
 	background-color: transparent;
 }
+
+.header {
+	margin-top: 15px;
+}
+.header-title {
+	margin-top: 0;
+}

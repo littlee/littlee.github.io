@@ -1,5 +1,5 @@
 # 优化选择器
-原文地址： http://learn.jquery.com/performance/optimize-selectors/
+[原文地址](http://learn.jquery.com/performance/optimize-selectors/)
 
 选择器优化已不是以前那么重要，鉴于更多的浏览器实现了 `document.querySelectorAll()` ，选择的负担由 jQuery 转移到浏览器上。即使如此，还是要一些技巧要谨记于心。
 
@@ -12,7 +12,7 @@ $( "#container div.robotarm" );
 // 炒鸡快
 $( "#container" ).find( "div.robotarm" );
 ```
-`.find()` 方法更快是因为第一个选择表达式 `$( "#container" )` 不需要经过 [__Sizzle__]:http://sizzlejs.com/ 引擎处理——只带有ID的选择器表达式由 `document.getElementById()` 进行处理，这个做炒鸡快是因为这个方法是浏览器原生的。
+`.find()` 方法更快是因为第一个选择表达式 `$( "#container" )` 不需要经过[Sizzle](http://sizzlejs.com/)引擎处理——只带有ID的选择器表达式由 `document.getElementById()` 进行处理，这个做炒鸡快是因为这个方法是浏览器原生的。
 
 ## 明确性
 对右手边的选择器要比左手边的更明确。
