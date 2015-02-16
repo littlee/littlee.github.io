@@ -5,7 +5,7 @@ $(document).ready(function () {
     console.log('ready!');
 });
 ```
-经验丰富的开发者有时会使用速记法 `$()` 代替 `$(document).ready()`。如果你正在编写的代码有可能是给没有 jQuery 经验的人看的，最好使用长的格式。
+经验丰富的开发者有时会使用速记法 `$()` 来代替 `$(document).ready()`。如果你正在编写的代码有可能是给没有 jQuery 经验的人看的，最好使用长的格式。
 ```js
 $(function () {
     console.log('ready!');
