@@ -1,3 +1,5 @@
+[TOC]
+
 # 如何创建基本的插件
 [原文链接](http://learn.jquery.com/plugins/basic-plugin-creation/)
 有时你想让一段函数可以为你的代码所利用。例如，也许你想在一个jQuery选择上调用一个简单的方法，并对其执行一系列操作。在这种情况下，你可能需要编写一个插件。

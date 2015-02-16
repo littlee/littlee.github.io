@@ -1079,149 +1079,145 @@ body .markdown-body
 .codehilite pre .vc { color: #008080 } /* Name.Variable.Class */
 .codehilite pre .vg { color: #008080 } /* Name.Variable.Global */
 .codehilite pre .vi { color: #008080 } /* Name.Variable.Instance */
-.codehilite pre .il { color: #945277 } /* Literal.Number.Integer.Long */</style><title>6-2_How_to_Create_a_Basic_Plugin</title></head><body><article class="markdown-body"><div class="toc">
+.codehilite pre .il { color: #945277 } /* Literal.Number.Integer.Long */</style><title>1-2_How_jQuery_Works</title></head><body><article class="markdown-body"><p><a href="http://littlee.github.io/">返回首页</a></p>
+<h1 id="jquery"><a name="user-content-jquery" href="#jquery" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>jQuery 如何工作</h1>
+<div class="toc">
 <ul>
-<li><a href="#_1">如何创建基本的插件</a><ul>
-<li><a href="#jquery">jQuery 工作方式：对象方法</a></li>
-<li><a href="#_2">基本插件编写</a></li>
-<li><a href="#_3">链式调用</a></li>
-<li><a href="#_4">保护$别名并添加作用域</a></li>
-<li><a href="#_5">最小化插件的足迹</a></li>
-<li><a href="#each">使用.each()方法</a></li>
-<li><a href="#_6">接受选项</a></li>
-<li><a href="#_7">总结</a></li>
+<li><a href="#jquery">jQuery 如何工作</a><ul>
+<li><a href="#jquery_1">jQuery 基础</a></li>
+<li><a href="#_1">在文档准备好时运行代码</a></li>
+<li><a href="#_2">完整的例子</a></li>
+<li><a href="#html">添加和移除一个 HTML 类</a></li>
+<li><a href="#_3">特别的效果</a></li>
+<li><a href="#_4">回调和函数</a><ul>
+<li><a href="#_5">不带参数的回调</a></li>
+<li><a href="#_6">带参数的回调</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
-<h1 id="_1"><a name="user-content-_1" href="#_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>如何创建基本的插件</h1>
-<p><a href="http://learn.jquery.com/plugins/basic-plugin-creation/">原文链接</a><br />
-有时你想让一段函数可以为你的代码所利用。例如，也许你想在一个jQuery选择上调用一个简单的方法，并对其执行一系列操作。在这种情况下，你可能需要编写一个插件。</p>
-<h2 id="jquery"><a name="user-content-jquery" href="#jquery" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>jQuery 工作方式：对象方法</h2>
-<p>在我们编写插件之前，首先必须理解一点jQuery的工作方式。看下这段代码：<br />
-<div class="codehilite"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">);</span>
+<h3 id="jquery_1"><a name="user-content-jquery_1" href="#jquery_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>jQuery 基础</h3>
+<p>这是一个基础的教程，被设计成来帮助你入门jQuery。如果你还没有建立一个测试页面，从下面的 HTML 代码开始吧：<br />
+<div class="codehilite"><pre><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Demo<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;http://jquery.com/&quot;</span><span class="nt">&gt;</span>jQuery<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;jquery.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+
+    <span class="c1">// Your code goes here.</span>
+
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
 </pre></div>
 <br />
-这是一段非常基础的 jQuery 代码，但是你知道幕后都发生了什么吗？无论何时你使用 <code>$</code> 函数去选择元素的时候，它返回一个 jQuery 对象。这个对象包含了所有你一直使用的方法（<code>.css()</code>, <code>.click()</code>, 等等）以及所有匹配你的选择器的元素。jQuery对象从 <code>$.fn</code> 对象获得这些方法，这个对象包含了所有的jQuery对象方法，如果我们想编写自己的方法，它必须也包含这些。</p>
-<h2 id="_2"><a name="user-content-_2" href="#_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>基本插件编写</h2>
-<p>比如说我们想要创建一个使元素的文本变为绿色的插件。我们需要做的是添加一个叫<code>greenify</code>的函数到<code>$.fn</code>，然后它就可以像其他 jQuery 对象方法使用。<br />
-<div class="codehilite"><pre><span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">greenify</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span> <span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span> <span class="p">);</span>
+<code>&lt;script&gt;</code>元素的<code>src</code>属性必须指向 jQuery 的一个副本，从<a href="http://jquery.com/download/">下载jQuery</a>页面下载一个 jQuery 的副本并将<code>jquery.js</code>文件保存在与你的 HTML 文件的同一个目录下。</p>
+<p><em>注意：当你下载 jQuery的时候，文件名可能会包含版本号，例如<code>jquery-x.y.z.js</code>。确保将文件重命名成<code>jquery.js</code>或者更改<code>src</code>属性使其匹配文件名。</em></p>
+<h3 id="_1"><a name="user-content-_1" href="#_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>在文档准备好时运行代码</h3>
+<p>为了确保代码在浏览器加载完文档后运行，许多 JavaScript 开发者将他们的代码包装在一个 <code>onload</code> 函数里面：<br />
+<div class="codehilite"><pre><span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;welcome&#39;</span><span class="p">);</span>
 <span class="p">};</span>
-
-<span class="nx">$</span><span class="p">(</span> <span class="s2">&quot;a&quot;</span> <span class="p">).</span><span class="nx">greenify</span><span class="p">();</span> <span class="c1">// 使所有链接变绿</span>
 </pre></div>
 <br />
-注意在使用另一个方法<code>.css()</code>的时候，我们使用<code>this</code>，而不是<code>$(this)</code>。这是因为我们的 <code>greenify</code> 函数也是<code>.css()</code>的同一个对象的一部分。</p>
-<h2 id="_3"><a name="user-content-_3" href="#_3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>链式调用</h2>
-<p>这也行，但是我们需要为我们的插件做一点事使其能在真实世界存活得更久。jQuery的一个特性是链式调用，当你在选择器上链接五六个动作时就是链式调用。这个是使所有jQuery对象方法再次返回原来的jQuery对象（也有例外：<code>.width()</code> 不带参数调用的时候返回元素的宽度，且不支持链式调用）。多加一行代码即可使我们的插件能进行链式调用。<br />
-<div class="codehilite"><pre><span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">greenify</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">);</span>
-    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">).</span><span class="nx">greenify</span><span class="p">().</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;greenfied&#39;</span><span class="p">);</span>
-</pre></div>
-</p>
-<h2 id="_4"><a name="user-content-_4" href="#_4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>保护$别名并添加作用域</h2>
-<p><code>$</code>变量在JavaScript库中非常流行，如果你将其他库与jQuery一起使用，你不得不通过<code>jQuery.noConflict()</code>让jQuery不使用<code>$</code>。即使如此，这会破坏我们的插件，由于它是在假设jQuery使用了<code>$</code>作为别名的情况下编写的。为了与其他插件一起使用，并且依然使用jQuery的<code>$</code>别名，我们需要将我们所有的代码放在一个<a href="http://benalman.com/news/2010/11/immediately-invoked-function-expression/">立即调用函数表达式</a>里面，再传递jQuery函数，将参数命名为<code>$</code>。<br />
-<div class="codehilite"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">greenify</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">);</span>
-        <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}(</span><span class="nx">jQuery</span><span class="p">));</span>
+不幸的是，所有图片没有完成下载之前，代码不会运行，包括横幅广告。为了在文档准备好可以被操作的时候就运行代码，jQuery 拥有一个被称为 ready 事件的声明。<br />
+<div class="codehilite"><pre><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Your code here.</span>
+<span class="p">});</span>
 </pre></div>
 <br />
-补充一下，“立即调用函数表达式”的主要目的是允许我们使用自己的私有变量。假设我们需要一个不同颜色的绿色，并存放那个在一个变量中。<br />
-<div class="codehilite"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">shade</span> <span class="o">=</span> <span class="s2">&quot;#556b2f&quot;</span><span class="p">;</span>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">greenify</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span> <span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="nx">shade</span> <span class="p">);</span>
-        <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
-    <span class="p">};</span> 
-<span class="p">}(</span><span class="nx">jQuery</span><span class="p">));</span>
-</pre></div>
-</p>
-<h2 id="_5"><a name="user-content-_5" href="#_5" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>最小化插件的足迹</h2>
-<p>编写插件的时候，最佳实践只占用一个<code>$.fn</code>的位置，这样减少了你的插件被重写的几率，也减少了你的插件重写其他插件的几率。一句话，这样是不好的：<br />
-<div class="codehilite"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">openPopup</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{};</span>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">closePopup</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">();</span>
-<span class="p">}(</span><span class="nx">jQuery</span><span class="p">));</span>
-</pre></div>
-<br />
-只占用一个位置会更好，并使用参数来控制动作。<br />
-<div class="codehilite"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">popup</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">action</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">action</span> <span class="o">===</span> <span class="s1">&#39;open&#39;</span><span class="p">)</span> <span class="p">{</span>
-            <span class="c1">// Open popup code</span>
-        <span class="p">}</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">action</span> <span class="o">===</span> <span class="s1">&#39;close&#39;</span><span class="p">)</span> <span class="p">{</span>
-            <span class="c1">// Close popup code</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}(</span><span class="nx">jQuery</span><span class="p">))</span>
-</pre></div>
-</p>
-<h2 id="each"><a name="user-content-each" href="#each" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>使用<code>.each()</code>方法</h2>
-<p>典型的jQuery对象会包含任意数目的DOM元素的引用，这也是为什么jQuery对象经常被称为集合。如果你想要对任何特定的元素进行操作（例如获取data属性，计算特定的位置），则你需要使用<code>.each()</code>来遍历元素。<br />
-<div class="codehilite"><pre><span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">myNewPlugin</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="c1">// Do something to each element here</span>
+例如，在 ready 事件中，你可以为链接添加点击事件：<br />
+<div class="codehilite"><pre><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Thanks for visiting!&#39;</span><span class="p">);</span>
     <span class="p">});</span>
-<span class="p">};</span>
-</pre></div>
-<br />
-注意到我们返回<code>.each()</code>的结果集，而不是返回<code>this</code>。因为<code>.each()</code>已经可以进行链式调用，它返回我们之后返回的<code>this</code>。这是一个目前为止处理链式调用更好的方法。</p>
-<h2 id="_6"><a name="user-content-_6" href="#_6" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>接受选项</h2>
-<p>随着你的插件愈加复杂，让你的插件通过接受选项进行自定义是一个好主意。最简单的方法是，尤其是对于许多选项的情况，就是接受一个对象字面量。让我们修改一下greenify插件使其接受选项。<br />
-<div class="codehilite"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">greenify</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">settings</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
-            <span class="nx">color</span><span class="o">:</span> <span class="s1">&#39;#556b2f&#39;</span><span class="p">,</span>
-            <span class="nx">backgroundColor</span><span class="o">:</span> <span class="s1">&#39;white&#39;</span>
-        <span class="p">},</span> <span class="nx">options</span><span class="p">);</span>
-
-        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">css</span><span class="p">({</span>
-            <span class="nx">color</span><span class="o">:</span> <span class="nx">settings</span><span class="p">.</span><span class="nx">color</span><span class="p">,</span>
-            <span class="nx">backgroundColor</span><span class="o">:</span> <span class="nx">settings</span><span class="p">.</span><span class="nx">backgroundColor</span>
-        <span class="p">});</span>
-    <span class="p">};</span> 
-<span class="p">}(</span><span class="nx">jQuery</span><span class="p">));</span>
-</pre></div>
-<br />
-使用的栗子：<br />
-<div class="codehilite"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">).</span><span class="nx">greenify</span><span class="p">({</span>
-    <span class="nx">color</span><span class="o">:</span> <span class="s1">&#39;orange&#39;</span>
 <span class="p">});</span>
 </pre></div>
 <br />
-颜色的默认值通过<code>$.extend()</code>被重写为橙色。</p>
-<h2 id="_7"><a name="user-content-_7" href="#_7" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>总结</h2>
-<p>这是一个简单的插件例子，使用了我们讨论过的技术：<br />
-<div class="codehilite"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">showLinkLocation</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">link</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-            <span class="nx">link</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39; (&#39;</span> <span class="o">+</span> <span class="nx">link</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;) &#39;</span><span class="p">);</span>
-        <span class="p">});</span>
-        <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
-    <span class="p">};</span>
-<span class="p">}(</span><span class="nx">jQuery</span><span class="p">));</span>
-
-<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">).</span><span class="nx">showLinkLocation</span><span class="p">();</span>
-</pre></div>
-<br />
-这个插件可以优化成这样：<br />
-<div class="codehilite"><pre><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">showLinkLocation</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="s1">&#39; (&#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">href</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">;</span>
-        <span class="p">});</span>
-        <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
-    <span class="p">};</span>
+复制上面的代码到你的 HTML 文件中。然后，保存文件，在浏览器中刷新你的测试页面。现在点击链接应该会显示一个弹出窗口，接着继续默认的行为，导航到 <a href="http://jquery.com">http://jquery.com</a>.</p>
+<p>对于 <code>click</code> 和大多数其他事件，你可以通过在事件处理器中调用 <code>event.preventDefault()</code> 阻止默认的行为：<br />
+<div class="codehilite"><pre><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">alter</span><span class="p">(</span><span class="s1">&#39;As you can see, the link no longer took you to jquery.com&#39;</span><span class="p">);</span>
+        <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+    <span class="p">});</span>
 <span class="p">});</span>
 </pre></div>
 <br />
-我们使用<code>.append()</code>的能力接收一个回调函数，且回调函数的返回值会确定对集合的每个元素追加什么。同时也注意到我们不使用<code>.attr()</code>方法来检索<code>href</code>属性，因为原生的DOM API给了我们对href属性更简易的访问。</p></article></body></html>
+尝试用上面的代码替换你刚才复制到 HTML 文件的第一段 jQuery 代码。保存文件然后再次刷新试试。</p>
+<h3 id="_2"><a name="user-content-_2" href="#_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>完整的例子</h3>
+<p>下面的例子说明了上面讨论的点击处理代码，直接嵌入到 HTML <code>body</code> 中。注意在实践过程中，把你的代码放在一个单独的 JS 文件并使用 <code>&lt;script&gt;</code> 元素的 <code>src</code> 加载到页面中会更好。</p>
+<div class="codehilite"><pre><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Demo<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;http://jquery.com/&quot;</span><span class="nt">&gt;</span>jQuery<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;jquery.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;myCode.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+
+
+<h3 id="html"><a name="user-content-html" href="#html" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>添加和移除一个 HTML 类</h3>
+<p><strong>重要：</strong> <em>你必须将余下的 jQuery 例子放在 <code>ready</code> 事件中以便于你的代码会在文档准备好时执行。</em></p>
+<p>另外一个常有的任务是添加会移除一个类。</p>
+<p>首先，在文档的 <code>&lt;head&gt;</code> 中添加一些样式信息，像这样：<br />
+<div class="codehilite"><pre><span class="nt">&lt;style&gt;</span>
+    <span class="nt">a</span><span class="nc">.test</span> <span class="p">{</span>
+        <span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+</pre></div>
+<br />
+接下来，在脚本加上 <code>.addClass()</code> 的调用。<br />
+<div class="codehilite"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">);</span>
+</pre></div>
+</p>
+<h3 id="_3"><a name="user-content-_3" href="#_3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>特别的效果</h3>
+<p>jQuery 同时提供了一些简便的效果来帮助你使你的网站脱颖而出。例如，如果你创建一个这样的点击事件处理器：<br />
+<div class="codehilite"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+    <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">hide</span><span class="p">(</span><span class="s1">&#39;slow&#39;</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+<br />
+则链接会在点击的时候慢慢消失。</p>
+<h2 id="_4"><a name="user-content-_4" href="#_4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>回调和函数</h2>
+<p>不像许多其他的编程语言，JavaScript 让你可以自由地到处传递延后执行的函数。<em>回调</em> 是一个作为参数传递给另一个函数并在其父函数完成后执行。回调很特殊，因为他们耐心地等待他们的父函数完成后才执行。<br />
+为了使用回调，知道图和传递他们到他们的父函数的很重要的。</p>
+<h3 id="_5"><a name="user-content-_5" href="#_5" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>不带参数的回调</h3>
+<p>如果一个回调没有参数，你可以像这样进行传递：<br />
+<div class="codehilite"><pre><span class="nx">$</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;myhtmlpage.html&#39;</span><span class="p">,</span> <span class="nx">myCallback</span><span class="p">);</span>
+</pre></div>
+<br />
+当 <code>$.get()</code> 完成获取 <code>myhtmlpage.html</code> 时，<code>myCallback()</code> 才执行。</p>
+<blockquote>
+<p><strong>注意：</strong>：这里的第二个参数是一个简单的函数名（但 <em>不是</em> 一个字符串，且没有括号）</p>
+</blockquote>
+<h3 id="_6"><a name="user-content-_6" href="#_6" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>带参数的回调</h3>
+<p>执行带参数的回调会有点棘手。<br />
+<strong>错误的用法</strong><br />
+这个例子的代码不会正常运行：<br />
+<div class="codehilite"><pre><span class="nx">$</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;myhtmlpage.html&#39;</span><span class="p">,</span> <span class="nx">myCallback</span><span class="p">(</span><span class="nx">param1</span><span class="p">,</span> <span class="nx">param2</span><span class="p">));</span>
+</pre></div>
+<br />
+失败的原因代码会立即执行 <code>myCallback(param1, param2)</code> 并将 <code>myCallback()</code> 的 <em>返回值</em> 作为传递给 <code>$.get()</code> 的第二个参数。我们真正想要的是传递 <code>myCallback()</code> 这个函数，不是 <code>myCallback(param1, param2)</code> 的返回值（可能是或不是一个函数）。所以，怎样传递 <code>myCallback()</code> 并带有参数呢？</p>
+<p><strong>正确的用法</strong><br />
+为了推迟 <code>myCallback()</code> 的带参数执行，你可以使用一个匿名函数做为一个包装器。注意 <code>function () {</code> 的使用。这个匿名函数只做一件事：带着 <code>param1</code> 和 <code>param2</code> 的值调用了 <code>myCallback()</code>。<br />
+<div class="codehilite"><pre><span class="nx">$</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;myhtmlpage.html&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">myCallback</span><span class="p">(</span><span class="nx">param1</span><span class="p">,</span> <span class="nx">param2</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+<br />
+当 <code>$.get()</code> 完成获取 <code>myhtmlpage.html</code> 页面的时候，它执行这个执行了 <code>myCallback(param1, param2)</code> 匿名函数。</p></article></body></html>
