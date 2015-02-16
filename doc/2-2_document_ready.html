@@ -1079,7 +1079,7 @@ body .markdown-body
 .codehilite pre .vc { color: #008080 } /* Name.Variable.Class */
 .codehilite pre .vg { color: #008080 } /* Name.Variable.Global */
 .codehilite pre .vi { color: #008080 } /* Name.Variable.Instance */
-.codehilite pre .il { color: #945277 } /* Literal.Number.Integer.Long */</style><title>2-2_document_ready</title></head><body><article class="markdown-body"><h1 id="jquery-documentready"><a name="user-content-jquery-documentready" href="#jquery-documentready" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>jQuery 核心：<code>$(document).ready()</code></h1>
+.codehilite pre .il { color: #945277 } /* Literal.Number.Integer.Long */</style><title>2-2_Document_Ready</title></head><body><article class="markdown-body"><h1 id="jquery-documentready"><a name="user-content-jquery-documentready" href="#jquery-documentready" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>jQuery 核心：<code>$(document).ready()</code></h1>
 <p>在文档没有准备好之前，页面不能被安全地操作。jQuery 为你检测这个准备好的状态。 在 <code>$(document).ready()</code> 里面的代码只会在页面 DOM 准备好运行 JavaScript 代码的时候运行一次。在 <code>$(window).load(function () {...}</code> 里面的代码会在整个页面准备好的时候运行，包括图片和 iframe 不仅仅是 DOM 。<br />
 <div class="codehilite"><pre><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;ready!&#39;</span><span class="p">);</span>
