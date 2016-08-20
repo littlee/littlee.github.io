@@ -1,0 +1,15 @@
+* {
+	box-sizing: border-box;
+}
+
+h2 {
+	text-align: center;
+}
+
+h2 > img {
+	vertical-align: middle;
+}
+
+.center {
+	text-align: center;
+}
