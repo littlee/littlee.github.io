@@ -2,14 +2,27 @@
 	box-sizing: border-box;
 }
 
-h2 {
-	text-align: center;
+body {
+	margin: 0;
+	padding: 0;
 }
 
-h2 > img {
-	vertical-align: middle;
+#wrap {
+	position: relative;
 }
 
-.center {
+#link {
+	position: absolute;
+	display: block;
+	bottom: 10px;
+	width: 50%;
 	text-align: center;
+	background-color: orange;
+	color: white;
+	text-decoration: none;
+	padding: 10px;
+	border-radius: 5px;
+	margin: auto;
+	left: 0;
+	right: 0;
 }
