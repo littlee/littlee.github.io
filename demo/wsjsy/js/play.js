@@ -1,4 +1,5 @@
 var FREE_COUNT = 3;
+var GAME_TIME = 50;
 
 var playState = {
 
@@ -68,7 +69,7 @@ var playState = {
 
 		// 剩余时间
 		game.add.sprite(330, 700, 'shengyushijian');
-		this.time = 30;
+		this.time = GAME_TIME;
 		this.timeText = game.add.text(0, 0, this.time + 's', {
 			font: '64px Arial',
 			color: '#333',
