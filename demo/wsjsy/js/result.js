@@ -11,13 +11,30 @@ var resultState = {
 		});
 		this.resultTitle.anchor.setTo(0.5, 0);
 
-		var num = sessionStorage.getItem('rrr');
-		this.resultNum = game.add.text(game.world.centerX, 320, num + '次', {
+		var num = parseInt(sessionStorage.getItem('rrr'));
+		this.resultNum = game.add.text(game.world.centerX, 300, num + '次', {
 			font: '72px Arial',
 			fill: '#f56e48',
 			align: 'center'
 		});
 		this.resultNum.anchor.setTo(0.5, 0);
+
+		var rText = '知识匮乏，还需努力';
+		if (num > 5 && num < 9) {
+			rText = '你离优秀就差一步';
+		}
+		else if (num >= 9 && num <= 10){
+			rText = '恭喜你击败了95%的挑战者';
+		}
+		else if (num > 10) {
+			rText = '恭喜你击败了99%的挑战者';
+		}
+		this.rTextLabel = game.add.text(game.world.centerX, 420, rText, {
+			font: '45px Arial',
+			fill: '#f56e48',
+			align: 'center'
+		});
+		this.rTextLabel.anchor.setTo(0.5, 0);
 
 		this.replayBtn = game.add.sprite(15, 550, 'zaiwanyici');
 		this.replayBtn.inputEnabled = true;
