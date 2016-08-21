@@ -6,6 +6,9 @@ var playState = {
 		// 背景图片
 		this.bg = game.add.tileSprite(0, 0, 1920, 1000, 'yongchi');
 
+		// 打击音乐
+		this.beatSound = game.add.audio('beat');
+
 		// 加载问题数据
 		this.question = game.cache.getJSON('question');
 		this.question = this.question.sort(function() {
@@ -188,6 +191,7 @@ var playState = {
 		this.youyong.visible = false;
 		this.youyongB.visible = true;
 		this.beatenAnim.play(10, false);
+		this.beatSound.play();
 	},
 
 	_showQuestion: function() {

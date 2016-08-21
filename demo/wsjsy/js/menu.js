@@ -6,6 +6,12 @@ var menuState = {
 		startBtn.inputEnabled = true;
 		startBtn.events.onInputDown.add(function() {
 			game.state.start('play');
+			this.bgMusic.destroy();
 		}, this);
+
+
+		this.bgMusic = game.add.audio('bg');
+		this.bgMusic.play();
+
 	}
 };

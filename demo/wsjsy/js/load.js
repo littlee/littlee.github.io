@@ -36,6 +36,9 @@ var loadState = {
 
 		game.load.image('zaiwanyici', 'images/zaiwanyici.png');
 		game.load.image('liaojiewomen', 'images/liaojiewomen.png');
+
+		game.load.audio('bg', 'sounds/bg.mp3');
+		game.load.audio('beat', 'sounds/beat.mp3');
 	},
 
 	create: function() {
