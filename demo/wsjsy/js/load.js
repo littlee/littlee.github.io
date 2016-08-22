@@ -39,9 +39,15 @@ var loadState = {
 
 		game.load.audio('bg', 'sounds/bg.mp3');
 		game.load.audio('beat', 'sounds/beat.mp3');
+
+		game.load.image('r0', 'images/r/1.png');
+		game.load.image('r1', 'images/r/2.png');
+		game.load.image('r2', 'images/r/3.png');
+		game.load.image('r3', 'images/r/4.png');
+		game.load.image('jieguo_bg', 'images/jieguo_bg.png');
 	},
 
 	create: function() {
-		game.state.start('menu');
+		game.state.start('result');
 	}
 };

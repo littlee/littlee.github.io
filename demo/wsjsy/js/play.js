@@ -57,26 +57,22 @@ var playState = {
 		}, this);
 
 		// 打击次数
-		game.add.sprite(10, 700, 'dajicishu');
+		game.add.sprite(game.world.centerX, 620, 'dajicishu').anchor.setTo(0.5, 0);
 		this.score = 0;
 		this.beatCountText = game.add.text(0, 0, this.score + '次', {
 			font: '64px Arial',
-			color: '#333',
+			fill: '#333',
 			boundsAlignH: 'center',
 			boundsAlignV: 'middle'
 		});
-		this.beatCountText.setTextBounds(10, 700, 300, 101);
+		this.beatCountText.setTextBounds(game.world.centerX - 150, 620, 300, 101);
 
 		// 剩余时间
-		game.add.sprite(330, 700, 'shengyushijian');
 		this.time = GAME_TIME;
-		this.timeText = game.add.text(0, 0, this.time + 's', {
-			font: '64px Arial',
-			color: '#333',
-			boundsAlignH: 'center',
-			boundsAlignV: 'middle'
+		this.timeText = game.add.text(550, 10, this.time + 's', {
+			font: '50px Arial',
+			fill: '#fff'
 		});
-		this.timeText.setTextBounds(330, 700, 300, 101);
 		this.countDownTimer = game.time.events.loop(Phaser.Timer.SECOND, function() {
 			this.time--;
 			this.timeText.setText(this.time + 's');
@@ -115,15 +111,15 @@ var playState = {
 		}
 
 		// 回答问题
-		this.answerTitle = game.add.sprite(game.world.centerX, 0, 'huidawenti');
+		this.answerTitle = game.add.sprite(game.world.centerX, 100, 'huidawenti');
 		this.answerTitle.anchor.setTo(0.5, 0);
 		this.answerTitle.visible = false;
 
 		// 问题区域
-		this.questionPanel = game.add.sprite(game.world.centerX, 175, 'wentixianshiqu');
+		this.questionPanel = game.add.sprite(game.world.centerX, 275, 'wentixianshiqu');
 		this.questionPanel.anchor.setTo(0.5, 0);
 		this.questionPanel.visible = false;
-		this.questionPanelText = game.add.text(game.world.centerX, 200, '问题', {
+		this.questionPanelText = game.add.text(game.world.centerX, 300, '问题', {
 			font: '40px Arial',
 			color: '#333',
 			wordWrap: true,
@@ -139,23 +135,23 @@ var playState = {
 			color: '#333',
 			align: 'center'
 		};
-		this.optionA = game.add.sprite(game.world.centerX, 500, 'xuanxiang');
+		this.optionA = game.add.sprite(game.world.centerX, 600, 'xuanxiang');
 		this.optionA.anchor.setTo(0.5, 0);
 		this.optionA.visible = false;
 		this.optionA.events.onInputDown.add(function() {
 			this._answer('a');
 		}, this);
-		this.optionAText = game.add.text(game.world.centerX, 510, 'OPTION A', optionStyle);
+		this.optionAText = game.add.text(game.world.centerX, 610, 'OPTION A', optionStyle);
 		this.optionAText.anchor.setTo(0.5, 0);
 		this.optionAText.visible = false;
 
-		this.optionB = game.add.sprite(game.world.centerX, 590, 'xuanxiang');
+		this.optionB = game.add.sprite(game.world.centerX, 690, 'xuanxiang');
 		this.optionB.anchor.setTo(0.5, 0);
 		this.optionB.visible = false;
 		this.optionB.events.onInputDown.add(function() {
 			this._answer('b');
 		}, this);
-		this.optionBText = game.add.text(game.world.centerX, 600, 'OPTION B', optionStyle);
+		this.optionBText = game.add.text(game.world.centerX, 700, 'OPTION B', optionStyle);
 		this.optionBText.anchor.setTo(0.5, 0);
 		this.optionBText.visible = false;
 

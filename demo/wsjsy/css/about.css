@@ -25,4 +25,6 @@ body {
 	margin: auto;
 	left: 0;
 	right: 0;
+	box-shadow: 0 7px 10px -5px rgba(0, 0, 0, 0.5);
+	border: 1px solid #d28800;
 }

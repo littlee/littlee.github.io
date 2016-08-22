@@ -1,40 +1,35 @@
 var resultState = {
 	create: function() {
 		game.add.sprite(0, 0, 'fengmian');
-		this.questionPanel = game.add.sprite(game.world.centerX, 175, 'wentixianshiqu');
+		this.questionPanel = game.add.sprite(game.world.centerX, 175, 'jieguo_bg');
 		this.questionPanel.anchor.setTo(0.5, 0);
 
-		this.resultTitle = game.add.text(game.world.centerX, 220, '成功阻止傅爷', {
-			font: '50px Arial',
-			fill: '#f56e48',
-			align: 'center'
-		});
-		this.resultTitle.anchor.setTo(0.5, 0);
-
 		var num = parseInt(sessionStorage.getItem('rrr'));
-		this.resultNum = game.add.text(game.world.centerX, 300, num + '次', {
-			font: '72px Arial',
-			fill: '#f56e48',
+		this.resultNum = game.add.text(game.world.centerX, 300, num, {
+			font: '100px Arial',
+			fill: '#308530',
 			align: 'center'
 		});
 		this.resultNum.anchor.setTo(0.5, 0);
 
-		var rText = '知识匮乏，还需努力';
+		this.rText = [];
+		for(var i = 0; i < 4; i++) {
+			this.rText[i] = game.add.sprite(game.world.centerX, 450, 'r' + i);
+			this.rText[i].anchor.setTo(0.5, 0);
+			this.rText[i].visible = false;
+		}
+
+		var rIndex = 0;
 		if (num > 5 && num < 9) {
-			rText = '你离优秀就差一步';
+			rIndex = 1;
 		}
 		else if (num >= 9 && num <= 10){
-			rText = '恭喜你击败了95%的挑战者';
+			rIndex = 2;
 		}
 		else if (num > 10) {
-			rText = '恭喜你击败了99%的挑战者';
+			rIndex = 3;
 		}
-		this.rTextLabel = game.add.text(game.world.centerX, 420, rText, {
-			font: '45px Arial',
-			fill: '#f56e48',
-			align: 'center'
-		});
-		this.rTextLabel.anchor.setTo(0.5, 0);
+		this.rText[rIndex].visible = true;
 
 		this.replayBtn = game.add.sprite(15, 550, 'zaiwanyici');
 		this.replayBtn.inputEnabled = true;
