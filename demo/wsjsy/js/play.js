@@ -1,4 +1,4 @@
-var FREE_COUNT = 3;
+var FREE_COUNT = 2;
 var GAME_TIME = 50;
 
 var playState = {

@@ -20,13 +20,13 @@ var resultState = {
 		}
 
 		var rIndex = 0;
-		if (num > 5 && num < 9) {
+		if (num > 7 && num <= 9) {
 			rIndex = 1;
 		}
-		else if (num >= 9 && num <= 10){
+		else if (num > 9 && num <= 12){
 			rIndex = 2;
 		}
-		else if (num > 10) {
+		else if (num > 12) {
 			rIndex = 3;
 		}
 		this.rText[rIndex].visible = true;
