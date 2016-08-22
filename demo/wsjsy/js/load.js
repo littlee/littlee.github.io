@@ -48,6 +48,6 @@ var loadState = {
 	},
 
 	create: function() {
-		game.state.start('result');
+		game.state.start('menu');
 	}
 };
