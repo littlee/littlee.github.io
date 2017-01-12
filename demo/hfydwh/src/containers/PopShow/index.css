@@ -1,0 +1,36 @@
+.pop-show-list {
+  margin: 0 auto;
+  padding: 0;
+  width: 90%;
+}
+.pop-show-list:before {
+  content: "";
+  display: table;
+}
+.pop-show-list:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.pop-show-item {
+  list-style-type: none;
+  display: block;
+  float: left;
+  width: 33.333%;
+  text-align: center;
+  color: #ffe6a9;
+  padding: 0 30px;
+  font-size: 24px;
+
+}
+.pop-show-img {
+  width: 100%;
+  display: block;
+  border: 2px solid #ffe6a9;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+.pop-show-name {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

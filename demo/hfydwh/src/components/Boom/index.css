@@ -1,0 +1,40 @@
+.boom {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.boom > img {
+  width: 100%;
+  visibility: hidden;
+}
+
+.boom-boom {
+  animation-name: boom-animate;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 3;
+}
+
+@keyframes boom-animate {
+  from {
+    visibility: visible;
+    opacity: 0;
+    transform: scale(0.1);
+  }
+
+  30% {
+    opacity: 0.7;
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(3);
+  }
+}

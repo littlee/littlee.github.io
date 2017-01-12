@@ -1,0 +1,24 @@
+.lucky-audi-list {
+  list-style-type: none;
+  color: #ffe6a9;
+}
+
+.lucky-audi-body {
+  overflow-x: hidden;
+}
+
+.lucky-audi-item {
+  font-size: 24px;
+  display: block;
+  float: left;
+  width: 20%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lucky-audi-item > img {
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 10px;
+}

@@ -1,0 +1,40 @@
+.alert {
+  position: absolute;
+  top: 30%;
+  left: 40px;
+  right: 40px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+  outline: 0;
+}
+
+.alert-overlay {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.alert-body {
+  padding: 20px;
+  border-bottom: 1px solid #e6e6e6;
+  text-align: center;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.alert-ok {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: white;
+  border: none;
+  color: #0074F8;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  outline: 0;
+}
