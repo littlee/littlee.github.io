@@ -1,6 +1,7 @@
 import React from 'react'
 import req from 'superagent'
 import classNames from 'classnames'
+import { hashHistory } from 'react-router'
 
 import iconShare from '../../images/icon_share_m.svg'
 import iconLike from '../../images/icon_like_m.svg'
@@ -72,14 +73,16 @@ class PlayingItem extends React.Component {
               </div> : null
             }
           </div>
-          <a href="/" className="playing-btn">
+          <div className="playing-btn" onClick={() => {
+            hashHistory.goBack()
+          }}>
             <div className="playing-btn-icon">
               <img src={iconList} role="presentation" className="playing-btn-icon-list" />
             </div>
             <div className="playing-btn-text">
               节目单
             </div>
-          </a>
+          </div>
         </div>
       </div>
       )

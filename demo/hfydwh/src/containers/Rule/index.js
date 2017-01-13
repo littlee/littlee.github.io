@@ -1,7 +1,7 @@
 import './index.css'
 import React from 'react'
 import PageTitle from '../../components/PageTitle'
-import { Link } from 'react-router'
+import { hashHistory } from 'react-router'
 
 class Rule extends React.Component {
   render() {
@@ -16,12 +16,14 @@ class Rule extends React.Component {
           <p>5、系统自动识别为3个最受欢迎节目点赞的员工，获得幸运观众大抽奖。</p>
         </div>
         <div className="rule-btns">
-          <Link to="/" className="rule-btn">
+          <div className="rule-btn" onClick={() => {
+            hashHistory.goBack()
+          }}>
             <div className="rule-btn-icon rule-btn-icon-return" />
             <div className="rule-btn-text">
               返&nbsp;回
             </div>
-          </Link>
+          </div>
         </div>
       </div>
       )

@@ -5,7 +5,7 @@ import 'normalize.css'
 import './index.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Router, Route, IndexRoute, browserHistory } from 'react-router'
+import { Router, Route, IndexRoute, hashHistory } from 'react-router'
 
 // mobile
 import App from './App'
@@ -24,7 +24,7 @@ import PopShow from './containers/PopShow'
 import Demo from './containers/Demo'
 
 ReactDOM.render(
-  <Router history={browserHistory}>
+  <Router history={hashHistory}>
     <Route path="/demo" component={Demo} />
     <Route path="/d" component={AppDesktop}>
       <IndexRoute component={Chart} />

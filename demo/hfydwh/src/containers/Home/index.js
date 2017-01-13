@@ -55,7 +55,7 @@ class Home extends React.Component {
               分&nbsp;享
             </div>
           </div>
-          <a href="/playing" className="home-btn">
+          <Link to="playing" className="home-btn">
             <div className="home-btn-icon">
               <img src={iconPlaying} role="presentation" className="home-btn-icon-playing" style={{
                 visibility: this.state.modalOpen ? 'hidden' : 'visible'
@@ -64,8 +64,8 @@ class Home extends React.Component {
             <div className="home-btn-text">
               正在表演
             </div>
-          </a>
-          <Link to="/rule" className="home-btn">
+          </Link>
+          <Link to="rule" className="home-btn">
             <div className="home-btn-icon">
               <img src={iconRule} role="presentation" className="home-btn-icon-rule" style={{
                 visibility: this.state.modalOpen ? 'hidden' : 'visible'

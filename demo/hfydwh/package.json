@@ -26,5 +26,6 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://super13.ryx21.cn"
+  "proxy": "http://super13.ryx21.cn",
+  "homepage": "http://little.github.io/demo/hfydwh/build0"
 }
