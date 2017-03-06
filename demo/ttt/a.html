@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Document</title>
+  <style>
+    button {
+      font-size: 24px;
+      border: 1px solid #333;
+      background-color: orange;
+    }
+  </style>
+</head>
+<body>
+
+  <audio src="./Spooky-Island.mp3" id="m" style="display: none"></audio>
+  <br>
+  <br>
+  <br>
+  <button id="b">
+    turn on
+  </button>
+  <br>
+  <br>
+  <br>
+
+  <script>
+    var b = document.getElementById('b')
+    var m = document.getElementById('m')
+    
+    var op = localStorage.getItem('play')
+    if (op === 'on') {
+      m.play()
+    }
+
+    b.addEventListener('click', function() {
+      if (b.innerText === 'turn on') {
+        b.innerHTML = 'turn off'
+        m.play()
+        localStorage.setItem('play', 'on')
+      }
+      else {
+        b.innerHTML = 'turn on'
+        m.pause()
+        localStorage.setItem('play', 'off')
+      }
+    })
+  </script>
+</body>
+</html>
