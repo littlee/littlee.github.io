@@ -8,6 +8,16 @@
 	<link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon">
 	<link rel="stylesheet" href="./lib/monospace-dark.css">
 	<link rel="stylesheet" href="./lib/prism.css">
+	<style>
+		.main {
+			max-width: 860px;
+			margin: auto;
+		}
+
+		.main p > img {
+			max-width: 100%;
+		}
+	</style>
 	<script src="./lib/prism.js"></script>
 	<script src="./lib/marked.min.js" data-manual></script>
 </head>
@@ -18,7 +28,7 @@
 	</div>
 	<script>
 		var $main = document.getElementById('main');
-		fetch('./md/how_to_give_up_on_vue.md').then(res => res.text()).then(res => {
+		fetch('./md/01/index.md').then(res => res.text()).then(res => {
 			$main.innerHTML = marked(res);
 			Prism.highlightAllUnder($main);
 		})
