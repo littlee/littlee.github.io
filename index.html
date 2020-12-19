@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Littlee</title>
 	<link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon">
-	<link rel="stylesheet" href="./lib/monospace.css">
+	<link rel="stylesheet" href="./lib/monospace-dark.css">
+	<link rel="stylesheet" href="./lib/prism.css">
+	<script src="./lib/prism.js"></script>
+	<script src="./lib/marked.min.js" data-manual></script>
 </head>
+
 <body>
-	<h1>Oh~</h1>
-	<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione dolore eveniet, qui soluta in ea voluptatibus dolor itaque quod excepturi explicabo non quae mollitia minima totam perferendis numquam placeat quia.</p>
+	<div class="main line-numbers" id="main">
+
+	</div>
+	<script>
+		var $main = document.getElementById('main');
+		fetch('./md/how_to_give_up_on_vue.md').then(res => res.text()).then(res => {
+			$main.innerHTML = marked(res);
+			Prism.highlightAllUnder($main);
+		})
+	</script>
 </body>
+
 </html>
