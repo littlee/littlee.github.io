@@ -1,0 +1,526 @@
+ :root {
+  --accent-color: #c1cacc;
+  --accented-background-color: #fafafa;
+  --bg-color: white;
+  --border-color: #e1e7e8;
+  --code-bg-color: #f8f8f8;
+  --text-color: #5b6666;
+  --header-color: #363c3c;
+  --link-color: #f0423d;
+  --side-bar-bg-color: #fafafa;
+  --window-border: 1px solid rgba(0,0,0,.07);
+  --active-file-bg-color: #f2f2f2;
+  /* */
+  --body-font: 'source-sans-pro', sans-serif;
+  --border-radius: 2px;
+  --document-horizontal-margin: 80px;
+  --document-padding-x: 10ch;
+  --font-size: 16px;
+  --h1-fontsize: 2rem;
+  --h2-fontsize: 1.5rem;
+  --h3-fontsize: 1.125rem;
+  --line-height: 1.4;
+  --main-content-margin: 0 auto;
+  --main-content-max-width: 100ch;
+  --monospace-font-size: 14px;
+  --monospace-font: 'source-code-pro', monospace;
+  --monospace-line-height: 1.4;
+  --nav-width: 200px;
+  --vertical-padding: 40px;
+}
+
+/* Narrow layout styles */
+@media (max-width: 640px) {
+  :root {
+    --document-padding-x: 4ch;
+    --h1-fontsize: 1.5rem;
+    --h2-fontsize: 1.125rem;
+  }
+}
+
+/* Regular font */
+
+@font-face {
+    font-family: 'source-sans-pro';
+    font-style: normal;
+    font-weight: normal;
+    src: local('source-sans-pro'), local('SourceSansPro-Regular'), url('./lostkeys/SourceSansPro-Regular.ttf');
+}
+@font-face {
+    font-family: 'source-sans-pro';
+    font-style: italic;
+    font-weight: normal;
+    src: local('source-sans-pro'), local('SourceSansPro-It'), url('./lostkeys/SourceSansPro-It.ttf')
+}
+
+@font-face {
+    font-family: 'source-sans-pro';
+    font-style: normal;
+    font-weight: bold;
+    src: local('source-sans-pro'), local('SourceSansPro-Semibold'), url('./lostkeys/SourceSansPro-Semibold.ttf')
+}
+
+@font-face {
+    font-family: 'source-sans-pro';
+    font-style: italic;
+    font-weight: bold;
+    src: local('source-sans-pro'), local('SourceSansPro-SemiboldIt'), url('./lostkeys/SourceSansPro-SemiboldIt.ttf')
+}
+
+/* Monospace font */
+@font-face {
+    font-family: 'source-code-pro';
+    font-style: normal;
+    font-weight: normal;
+    src: local('source-code-pro'), local('SourceCodePro-Regular'), url('./lostkeys/SourceCodePro-Regular.otf');
+}
+@font-face {
+    font-family: 'source-code-pro';
+    font-style: italic;
+    font-weight: normal;
+    src: local('source-code-pro'), local('SourceCodePro-It'), url('./lostkeys/SourceCodePro-It.otf')
+}
+
+@font-face {
+    font-family: 'source-code-pro';
+    font-style: normal;
+    font-weight: bold;
+    src: local('source-code-pro'), local('SourceCodePro-Semibold'), url('./lostkeys/SourceCodePro-Semibold.otf')
+}
+
+@font-face {
+    font-family: 'source-code-pro';
+    font-style: italic;
+    font-weight: bold;
+    src: local('source-code-pro'), local('SourceCodePro-SemiboldIt'), url('./lostkeys/SourceCodePro-SemiboldIt.otf')
+}
+
+html {
+	font-size: var(--font-size);
+	background-color: var(--bg-color);
+}
+
+html,
+body {
+  color: var(--text-color);
+  font-family: var(--body-font);
+  line-height: var(--line-height);
+}
+
+/* on Windows/Linux, it is the part that is not titlebar or status bar.*/
+content {
+
+}
+
+#write {
+	/* size of writing area: */
+  padding-left: var(--document-padding-x);
+  padding-right: var(--document-padding-x);
+  max-width: var(--main-content-max-width);
+  box-sizing: border-box;
+}
+
+/**
+ * ---------------------
+ * Block Elements
+ */
+
+/* yaml */
+pre.md-meta-block {
+  background-color: var(--bg-color);
+  padding-bottom: .5rem;
+  color: var(--accent-color);
+  border-bottom: 2px solid var(--border-color);
+}
+
+/* headings */
+h1 {
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  font-size: var(--h1-fontsize);
+  font-weight: bold;
+  color: var(--header-color);
+}
+h1:not(:first-child) {
+  margin-top: 3rem;
+}
+
+
+h2 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-size: var(--h2-fontsize);
+  font-weight: bold;
+  color: var(--header-color);
+}
+
+h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: var(--h3-fontsize);
+  font-weight: bold;
+  color: var(--header-color);
+}
+
+h4, h5, h6 {
+  margin-top: 1rem;
+  margin-bottom: 0rem;
+  font-size: 1rem;
+  color: var(--header-color);
+}
+
+h1::before,
+h2::before,
+h3::before {
+  font-weight: 400;
+  font-size: 1rem;
+  text-align: right;
+  width: 3.5ch;
+  padding-right: 1ch;
+  margin-left: -3.5ch;
+  color: var(--accent-color);
+  display: inline-block;
+}
+
+h1::before {
+  content: '#1';
+}
+
+h2::before {
+  content: '#2';
+}
+
+h3::before {
+  content: '#3';
+}
+
+/* table */
+table {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* table header */
+thead {
+}
+
+/* table row */
+tr {}
+
+/* table cell */
+td,
+th {
+  border-style: solid;
+  border-color: var(--border-color);
+  border-width: 1px 0;
+  padding-top: .375rem;
+  padding-bottom: .375rem;
+}
+
+/* Remove table top border if immediately after a H2 which has a border already */
+h2 + table tr:first-child th,
+h2 + table tr:first-child td,
+  border-top-width: 0;
+}
+
+/* tooltip above tables */
+.md-table-edit {
+
+}
+
+/* lists */
+ul {
+
+}
+
+ol {
+
+}
+
+ul li {
+
+}
+
+li p {
+  margin: 0;
+}
+
+.task-list {
+  padding-left: 0;
+}
+
+.task-list-item {
+  padding-left: 1.5em;
+  margin-bottom: 0rem;
+}
+
+#write input[type='checkbox'] {
+  margin-top: 5px;
+}
+
+/* blockquote */
+blockquote {
+  margin: 1rem 0;
+  padding-left: 2ch;
+  margin-left: .5ch;
+  position: relative;
+  overflow: hidden;
+  border-left: 2px solid var(--border-color);
+}
+
+/* hr */
+hr {
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+p {
+  margin: 1rem 0;
+}
+
+/* diagram panel */
+.md-diagram-panel {
+
+}
+
+/* diagram panel in preview */
+#write .md-focus .md-diagram-panel {
+
+}
+
+/* reference link definition */
+.md-def-link {
+
+}
+
+/* footnote definition */
+.md-def-footnote {
+
+}
+
+/**
+ * Code Fences
+ * see http:/*support.typora.io/Code-Block-Styles
+ */
+
+.cm-s-inner {
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: .25rem 0;
+  background-color: var(--accented-background-color);
+}
+.cm-s-inner .CodeMirror-gutters {
+  background: var(--accented-background-color);
+}
+
+/* code tooltip */
+.code-tooltip {
+  box-shadow: none;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  background-color: var(--accented-background-color);
+  border-color: var(--border-color);
+  border-style: solid;
+  border-width: 0 1px 1px 1px;
+}
+
+.code-tooltip input {
+  outline: none;
+  width: 20ch;
+}
+
+.md-fences .code-tooltip {
+  bottom: 0;
+  padding: none;
+}
+
+.md-fences.md-focus .cm-s-inner {
+  /* Remove bottom right border radius when tooltip is shown */
+  border-bottom-right-radius: 0;
+}
+
+/* code tooltip autocomplete list */
+.autoComplt-list {
+  width: 20ch !important;
+  border-radius: var(--border-radius) !important;
+  background-color: var(--accented-background-color) !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+.autoComplt-hint {
+  background-color: transparent !important;
+  margin: 0 !important;
+  padding: 0.125rem 0.375rem !important;
+  color: var(--text-color) !important;
+  line-height: var(--line-height) !important;
+  height: 1.4rem !important;
+}
+.autoComplt-hint-selected {
+  background-color: var(--link-color) !important;
+  color: var(--bg-color) !important;
+}
+
+/**
+ * Mermaid Diagrams
+ * see https:/*github.com/knsv/mermaid/blob/master/dist/mermaid.css
+ */
+
+/**
+ * Inline Elements
+ */
+
+/* basic styles */
+
+code {
+  font-family: var(--monospace-font);
+  font-size: var(--monospace-font-size);
+  line-height: var(--monospace-line-height);
+  background-color: var(--border-color);
+  padding: 0 .125rem;
+  border-radius: .25rem;
+}
+
+strong {
+
+}
+
+em {
+
+}
+
+a {
+  color:  var(--link-color);
+}
+
+img {
+
+}
+
+/* extend styles */
+
+mark {
+
+}
+
+del {
+
+}
+
+sub {
+
+}
+
+sup {
+
+}
+
+/**
+ * Source Code Mode
+ * see http:/*support.typora.io/Code-Block-Styles
+ */
+#typora-source {
+	.cm-header {
+
+	}
+
+	.cm-strong {
+
+	}
+
+	.cm-em {
+
+	}
+
+	.cm-link {
+
+	}
+
+	.cm-string {
+
+	}
+
+	.cm-comment {
+
+	}
+}
+
+/**
+ * Control UI (optional)
+ */
+
+/* button style */
+.btn,
+.btn .btn-default {
+
+}
+
+/* outline area when popover */
+#outline-dropmenu {
+
+}
+
+/* side bar */
+.pin-outline #outline-dropmenu {
+
+}
+
+/* when sidepanel is visible */
+.pin-outline #write {
+
+}
+
+/* dialogs */
+.modal-content {}
+.modal-title {}
+
+/* search panel */
+#md-searchpanel {
+
+}
+
+#write div.md-toc-tooltip {
+	background-color: var(--bg-color);
+}
+
+/**
+ * Control UI on Mac (optional)
+ */
+
+/* quick open panel */
+#typora-quick-open {
+	/*background-color: #525C65; */
+}
+
+#md-searchpanel,
+.on-search-panel-open header,
+.modal-content,
+.popover,
+.context-menu {
+	/*background-color: @dialog-background; */
+}
+
+.popover.bottom > .arrow:after {
+	/*border-bottom-color: @dialog-background; */
+}
+
+/**
+ * Control UI on Windows/Linux (optional)
+ */
+
+/* context menu */
+.context-menu {}
+
+/* statue bar */
+footer {
+
+}
+
+/**
+ * Control UI on Windows Unibody Style (optional)
+ */
+
+/* left side mega menu */
+.megamenu-content {
+
+}
