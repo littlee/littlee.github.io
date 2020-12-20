@@ -20,9 +20,11 @@ module.exports = {
 ```
 
 此时，错误堆栈指向了正确的文件。
+
 ![](./md/01/vue_render_error_2.png)
 
 但是，点击文件链接后，发现文件内容与项目源代码相差甚远。
+
 ![](./md/01/vue_render_error_3.png)
 
 这是因为 `<template />` 的内容需要经过编译，才可以在浏览器中运行。
@@ -39,7 +41,7 @@ https://github.com/vuejs/vetur/issues/610
 
 - 每一个 props 都需要先声明一次才能使用
 - 每一个组件都需要先 import 之后再到 components 属性中声明才能使用，相当于声明两次
-- 而且，同样由于 vetur 的关系，在 components 属性的代码块中无法触发 VS Code 的自动导入
+- 同样由于 vetur 的关系，在 components 属性的代码块中无法触发 VS Code 的自动导入
 
 ## 自定义指令的复杂度
 
@@ -63,4 +65,6 @@ document.querySelectorAll('.menu-root .menu-sub .section-link');
 DSL === '都是泪'; // true
 ```
 
-从可持续发展的角度触发，我们应该学习模式而不是学习框架，这就是为什么以 [Minimal API Surface Area](https://2014.jsconf.eu/speakers/sebastian-markbage-minimal-api-surface-area-learning-patterns-instead-of-frameworks.html) 原则设计的框架更加灵活。
+从可持续发展的角度出发，我们应该学习模式而不是学习框架，这就是为什么以 **Minimal API Surface Area** 原则设计的框架更加灵活。
+
+假如读到这里，你决定放弃 vue，而不知道该选择什么替代品，那么请参考 https://2014.jsconf.eu/speakers/sebastian-markbage-minimal-api-surface-area-learning-patterns-instead-of-frameworks.html
