@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+      }
+      :root {
+        --edge: 200px;
+        --side: calc(var(--edge) / 2);
+        --side-neg: calc(var(--side) * -1);
+      }
+      .perspective {
+        perspective: 1000px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .wrap {
+        width: var(--edge);
+        height: var(--edge);
+        position: relative;
+        transition-property: transform;
+        transition-timing-function: ease-in-out;
+        transform-style: preserve-3d;
+      }
+      .side {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        font-size: 48px;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .side-1 {
+        background-color: rgba(102, 187, 106, 0.9);
+        transform: translate3d(0, 0, var(--side));
+      }
+      .side-2 {
+        background-color: rgba(41, 182, 246, 0.9);
+        transform: translate3d(0, 0, var(--side-neg)) rotate3d(0, 1, 0, 180deg);
+      }
+      .side-3 {
+        background-color: rgba(33, 150, 243, 0.9);
+        transform: translate3d(var(--side-neg), 0, 0) rotate3d(0, 1, 0, -90deg);
+      }
+      .side-4 {
+        background-color: rgba(255, 238, 88, 0.9);
+        transform: translate3d(var(--side), 0, 0) rotate3d(0, 1, 0, 90deg);
+      }
+      .side-5 {
+        background-color: rgba(239, 83, 80, 0.9);
+        transform: translate3d(0, var(--side-neg), 0) rotate3d(1, 0, 0, 90deg);
+      }
+      .side-6 {
+        background-color: rgba(255, 152, 0, 0.9);
+        transform: translate3d(0, var(--side), 0) rotate3d(1, 0, 0, -90deg);
+      }
+
+      .btn {
+        font-size: 24px;
+      }
+
+      .ui {
+        position: relative;
+        z-index: 99;
+      }
+
+      .label-inline {
+        margin: 5px;
+      }
+
+      .wrap-all {
+        transition-duration: 0s !important;
+        transform: rotate3d(1, 1, 1, 15deg);
+      }
+
+      .emojis {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        white-space: nowrap;
+      }
+
+      .emojis img {
+        width: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="perspective">
+      <div class="wrap wrap-all">
+        <div class="wrap wrap-x">
+          <div class="wrap wrap-y">
+            <div class="wrap wrap-z">
+              <div class="side side-1">?</div>
+              <div class="side side-2">?</div>
+              <div class="side side-3">?</div>
+              <div class="side side-4">?</div>
+              <div class="side side-5">?</div>
+              <div class="side side-6">?</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <button class="btn roll-btn">roll</button> -->
+    <div class="ui">
+      <h1>我来我来！!</h1>
+      <div class="teams"></div>
+      <p class="from">请选择业务线：</p>
+      <button class="btn roll-btn">ROLL</button>
+    </div>
+    <div class="emojis"></div>
+    <script>
+      function rnd(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+      function addTransEndOnce(target, fn) {
+        target.addEventListener('transitionend', fn, { once: true });
+      }
+
+      function setDiceName(names) {
+        document.querySelectorAll('.side').forEach((node, index) => {
+          node.textContent = names[index % names.length];
+        });
+      }
+
+      const imgManBow =
+        'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/285/man-bowing_1f647-200d-2642-fe0f.png';
+      const imgWomanBow =
+        'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/285/woman-bowing_1f647-200d-2640-fe0f.png';
+      const imgRaiseHand =
+        'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/285/man-raising-hand_1f64b-200d-2642-fe0f.png';
+      const STORE_KEY = 'names_db_1';
+
+      function dbInit() {
+        if (!localStorage.getItem(STORE_KEY)) {
+          localStorage.setItem(
+            STORE_KEY,
+            JSON.stringify([
+              {
+                name: '个性化',
+                members: ['文西超', '孙宇鹏'],
+              },
+              {
+                name: '班课',
+                members: [
+                  '陈会能',
+                  '古建明',
+                  '陈文超',
+                  '方翔祥',
+                  '陈敏菲',
+                  '黄乔',
+                  '吕华浩',
+                  '王锦聪',
+                ],
+              },
+              {
+                name: '培优',
+                members: ['孔维安', '詹梓彦'],
+              },
+              {
+                name: '双师',
+                members: ['肖乐', '谢俊星', '缪晓鋆', '刘珊', '杨璞', '林伟涛'],
+              },
+              {
+                name: '内容',
+                members: ['何梦琪', '林期斌'],
+              },
+            ])
+          );
+        }
+      }
+
+      dbInit();
+
+      const emojiLen = 30;
+      const raiseIndex = rnd(0, emojiLen - 1);
+      Array(emojiLen)
+        .fill()
+        .forEach((item, index) => {
+          let src =
+            index === raiseIndex
+              ? imgRaiseHand
+              : Math.random() - 0.5 > 0
+              ? imgManBow
+              : imgWomanBow;
+          document
+            .querySelector('.emojis')
+            .insertAdjacentHTML('beforeend', `<img src="${src}" />`);
+        });
+
+      const dbData = JSON.parse(localStorage.getItem(STORE_KEY));
+      dbData.forEach((item) => {
+        document
+          .querySelector('.teams')
+          .insertAdjacentHTML(
+            'beforeend',
+            `<label class="label-inline"><input class="team-radio" type="radio" name="team" value="${item.name}" />${item.name}</label>`
+          );
+      });
+
+      document.querySelectorAll('.team-radio').forEach((node) => {
+        node.addEventListener('change', (e) => {
+          console.log(e.target.value);
+          const members = dbData
+            .find((item) => item.name === e.target.value)
+            .members.slice();
+          document.querySelector(
+            '.from'
+          ).textContent = `select from: ${members.join('、')}`;
+          members.sort(() => Math.random() - 0.5);
+          setDiceName(members.slice(0, 6));
+        });
+      });
+
+      const $wrapX = document.querySelector('.wrap-x');
+      const $wrapY = document.querySelector('.wrap-y');
+      const $wrapZ = document.querySelector('.wrap-z');
+      const $allWrap = document.querySelectorAll('.wrap');
+      document.querySelector('.roll-btn').addEventListener('click', (e) => {
+        e.target.setAttribute('disabled', 'disabled');
+        $allWrap.forEach((node) => {
+          node.style.transitionDuration = '0s';
+          node.style.transform = '';
+        });
+        setTimeout(() => {
+          $allWrap.forEach((node) => {
+            node.style.transitionDuration = '3s';
+          });
+
+          $wrapX.style.transform = `rotateX(${rnd(4 * 2, 4 * 8) * 90}deg)`;
+          addTransEndOnce($wrapX, () => {
+            $wrapY.style.transform = `rotateY(${rnd(4 * 2, 4 * 8) * 90}deg)`;
+          });
+          addTransEndOnce($wrapY, () => {
+            $wrapZ.style.transform = `rotateZ(${rnd(4 * 2, 4 * 8) * 90}deg)`;
+          });
+          addTransEndOnce($wrapZ, () => {
+            e.target.removeAttribute('disabled');
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
